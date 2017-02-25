@@ -1,0 +1,74 @@
+<!-- TODO in Lab 5: Display the items on the menu with cost for each -->
+<!-- MenuSummaryView -->
+<div class="col-md-3" id="menuSummaryView">
+  <div class="row">
+    <div class="col-md-12">
+        <h2>My Dinner</h2>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-3">
+      <h4>People:</h4>
+    </div>
+    <div class="col-md-4">
+      <div class="input-group spinner">
+        <input type="number" ng-model="numberOfGuests" ng-change="setNumberOfGuest(numberOfGuests)" class="form-control" value="0" min="0" max="15" id="numberOfGuests">
+        <div class="input-group-btn-vertical">
+          <button class="btn btn-default" type="button" id="addNumberOfGuestsBtn" ng-click="setNumberOfGuest(numberOfGuests+1)">
+            <i class="fa fa-caret-up"></i>
+          </button>
+          <button class="btn btn-default" type="button" id="subNumberOfGuestsBtn" ng-click="setNumberOfGuest(numberOfGuests-1)">
+            <i class="fa fa-caret-down"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-5"></div>
+  </div>
+
+  <div class="row" id="dishNameRow">
+    <div class="col-md-6">
+      <h4>Dish Name</h4>
+    </div>
+    <div class="col-md-6">
+      <h4>Cost</h4>
+    </div>
+  </div>
+
+  <div id ="selectedDishesList">
+      <div class="row" id="pendingRow\" style="background-color:#f5f5ef">
+      <div class="col-md-6">
+        <h4 id="pendingName">Pending</h4>
+      </div>
+      <div class="col-md-3">
+        <h4 id="pendingCost">0</h4>
+      </div>
+      <div class="col-md-3">
+        <h4>SEK</h4>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="horizontalLine" style="border: 1px solid black;"></div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-6">
+      <h4></h4>
+    </div>
+    <div class="col-md-3">
+      <h4 id="totalCost">0</h4>
+    </div>
+    <div class="col-md-3">
+      <h4>SEK</h4>
+    </div>
+  </div>
+  <div class="row"><p></p></div>
+
+  <div class="row" style="text-align: center">
+    <a class="btn btn-primary" id="confirmDinnerBtn" ng-click="go('/confirm')">Confirm Dinner</a>
+  </div>
+
+</div>
