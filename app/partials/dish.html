@@ -26,12 +26,12 @@
 				<div class="col-md-6"  style="background-color: #ffe680">
 			        <div class="row" id="dishIngredients">
 			        	<div class="col-md-12" style="text-align: left">
-							<h3>Ingredients for {{numberOfGuests}} people</h3>
+							<h3>Ingredients for {{getNumberOfGuests()}} people</h3>
 			        		<div class="row" ng-repeat="ingredient in dish.extendedIngredients">
-								<div class="col-md-3" style="text-align: left">{{ingredient.amount * numberOfGuests}} {{ingredient.unitShort}}</div>
+								<div class="col-md-3" style="text-align: left">{{ingredient.amount * getNumberOfGuests()}} {{ingredient.unitShort}}</div>
 						 		<div class="col-md-6" style="text-align: left">{{ingredient.name}}</div>
 						 		<div class="col-md-1" style="text-align: right">SEK</div>
-						 		<div class="col-md-2" style="text-align: center">{{ingredient.amount * numberOfGuests}}</div>
+						 		<div class="col-md-2" style="text-align: center">{{ingredient.amount * getNumberOfGuests()}}</div>
 						 	</div>
 			        	<div><p><br></p></div>
 			        	<div class="row">
@@ -39,7 +39,7 @@
 			              		<a class="btn btn-primary" id="confirmButton" ng-click="addDish(); go('/search')">Confirm dish</a>
 			              	</div>
 			              	<div class="col-md-2" style="text-align:right">
-			              		<b>SEK {{totalPrice}}</b>
+			              		<b>SEK {{getPendingCost()}}</b>
 			              	</div>
 			        	</div>
 			        	<div><p></p></div>

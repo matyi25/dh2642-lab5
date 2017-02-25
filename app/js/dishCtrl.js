@@ -3,30 +3,58 @@
 dinnerPlannerApp.controller('DishCtrl', function ($scope,$routeParams,$location,Dinner) {
   	
 	$scope.numberOfGuests = Dinner.getNumberOfGuests();
+	$scope.pendingName = "Pending";
+  	$scope.pendingCost = 0;
+  	$scope.fullMenuPrice = Dinner.getTotalMenuPrice();
+  	var dishCost = 0;
 
 	$scope.go = function ( path ) {
   		$location.path( path );
   	};
   	
-
-  	$scope.getDish = function () {
-  		var dishCost = 0;
+	$scope.getDish = function () {
   		Dinner.Dish.get({id:$routeParams.dishId},function(data){
   			$scope.loadState = "loading";
      		$scope.dish=data
      		$scope.loadState = "";
-     		for (var i = 0; i < data.extendedIngredients.length; i++) {
-  				dishCost = (data.extendedIngredients[i].amount * $scope.numberOfGuests) + dishCost;
-  			}
-  			$scope.totalPrice = dishCost;
+     		$scope.pendingName = data.title;
+     		$scope.pendingCost = $scope.getDishPrice(data);
    		}, function(data){
      		alert("Data retrival was faulty");
    		});
    	}
-   	$scope.getDish();
+
+   	$scope.getPendingName = function() {
+   		return $scope.pendingName;
+   	}
+
+   	$scope.getPendingCost = function() {
+   		return $scope.getDishPrice($scope.dish);
+   	}
 
    	$scope.addDish = function () {
    		Dinner.addDishToMenu($scope.dish);
    	}
+
+   	$scope.getNumberOfGuests = function() {
+    	return Dinner.getNumberOfGuests();
+  	}
+
+  	$scope.getFullMenuPrice = function() {
+  		return Dinner.getTotalMenuPrice();
+  	}
+
+  	$scope.getDishPrice = function(dish) {
+  		var price = 0;
+  		if(dish == undefined) {return 0;}
+  		for (var i = 0; i < dish.extendedIngredients.length; i++) {
+      		price = (dish.extendedIngredients[i].amount * $scope.getNumberOfGuests()) + price;
+    	}
+    	return price;
+  	}
+
+  	if($routeParams.dishId != undefined) { 
+  		$scope.getDish(); 
+  	}
   
 });

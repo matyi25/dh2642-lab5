@@ -26,5 +26,17 @@ dinnerPlannerApp.controller('DinnerCtrl', function ($scope, $location, Dinner) {
     	return price;
   	}
 
+  	$scope.removeDish = function(dishId) {
+  		Dinner.removeDishFromMenuId(dishId);
+  	}
+
+  	$scope.getFullMenu = function () {
+  		Dinner.getFullMenu();
+  	}
+
+  	$scope.getFullMenuPrice = function() {
+  		Dinner.getTotalMenuPrice();
+  	}
+
 
 });

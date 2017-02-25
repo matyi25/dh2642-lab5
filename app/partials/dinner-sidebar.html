@@ -36,13 +36,25 @@
     </div>
   </div>
 
-  <div id ="selectedDishesList">
-      <div class="row" id="pendingRow\" style="background-color:#f5f5ef">
+  <div id ="selectedDishesList" ng-controller="DishCtrl">
+  	<div class="row" id="pendingRow" style="background-color:#f5f5ef" ng-repeat="dish in fullMenu">
       <div class="col-md-6">
-        <h4 id="pendingName">Pending</h4>
+        <a ng-click="removeDish(dish.id)"><h4>{{dish.title}}</h4></a>
       </div>
       <div class="col-md-3">
-        <h4 id="pendingCost">0</h4>
+        <h4>{{getDishPrice(dish)}}</h4>
+      </div>
+      <div class="col-md-3">
+        <h4>SEK</h4>
+      </div>
+    </div>
+
+      <div class="row" id="pendingRow" style="background-color:#f5f5ef">
+      <div class="col-md-6">
+        <h4 id="pendingName">{{getPendingName()}}</h4>
+      </div>
+      <div class="col-md-3">
+        <h4 id="pendingCost">{{getPendingCost()}}</h4>
       </div>
       <div class="col-md-3">
         <h4>SEK</h4>
@@ -58,8 +70,8 @@
     <div class="col-md-6">
       <h4></h4>
     </div>
-    <div class="col-md-3">
-      <h4 id="totalCost">0</h4>
+    <div class="col-md-3" ng-controller="DishCtrl">
+      <h4 id="totalCost">{{getFullMenuPrice() + getPendingCost()}}</h4>
     </div>
     <div class="col-md-3">
       <h4>SEK</h4>
