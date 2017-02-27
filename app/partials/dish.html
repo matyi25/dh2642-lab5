@@ -1,7 +1,7 @@
 <!-- We include the sidebar as it is shared across two screens. -->
 <ng-include src="'partials/dinner-sidebar.html'" ng-controller="DinnerCtrl"></ng-include>
 
-<div id="dishDetailsView">
+<div id="dishDetailsView" ng-class="{'loading': loadState}">
 	<div class="section">
 		<div class="container">
 			<div class="row">
@@ -33,6 +33,7 @@
 						 		<div class="col-md-1" style="text-align: right">SEK</div>
 						 		<div class="col-md-2" style="text-align: center">{{ingredient.amount * getNumberOfGuests()}}</div>
 						 	</div>
+						</div>
 			        	<div><p><br></p></div>
 			        	<div class="row">
 			              	<div class="col-md-4">
@@ -47,15 +48,19 @@
 				</div>
 			</div>
 		</div>
+	</div>
+	<div><br><br></div>
 	<div class="section">
 		<div class="container">
 			<div class="row" id="dishPreparation">
-				<div class="col-md-12" style="text-align: left">
+				<div class="col-md-12" style="text-align: left; background-color: #ffe680">
 					<h1>Preparation</h1>
 					<p>{{dish.instructions}}</p>
 				</div>
 			</div>
 		</div>
+	</div>
+	<div id="waitDialog" class="modal">
 	</div>
 </div>
 

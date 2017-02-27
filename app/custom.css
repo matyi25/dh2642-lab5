@@ -33,6 +33,14 @@ img {
     display: block;
 }
 
+#dishDetailsView.loading {
+    overflow: hidden;   
+}
+
+#dishDetailsView.loading .modal {
+    display: block;
+}
+
 #header {
   background-color: #d6d6c2;
 }

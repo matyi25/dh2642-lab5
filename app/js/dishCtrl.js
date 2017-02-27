@@ -4,19 +4,20 @@ dinnerPlannerApp.controller('DishCtrl', function ($scope,$routeParams,$location,
   	
 	$scope.numberOfGuests = Dinner.getNumberOfGuests();
 	$scope.pendingName = "Pending";
-  	$scope.pendingCost = 0;
-  	$scope.fullMenuPrice = Dinner.getTotalMenuPrice();
-  	var dishCost = 0;
+  $scope.pendingCost = 0;
+  $scope.loadState = false;
+  $scope.fullMenuPrice = Dinner.getTotalMenuPrice();
+  var dishCost = 0;
 
 	$scope.go = function ( path ) {
   		$location.path( path );
   	};
   	
 	$scope.getDish = function () {
+      $scope.loadState = true;
   		Dinner.Dish.get({id:$routeParams.dishId},function(data){
-  			$scope.loadState = "loading";
      		$scope.dish=data
-     		$scope.loadState = "";
+     		$scope.loadState = false;
      		$scope.pendingName = data.title;
      		$scope.pendingCost = $scope.getDishPrice(data);
    		}, function(data){

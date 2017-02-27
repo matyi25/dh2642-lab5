@@ -14,14 +14,6 @@
     <div class="col-md-4">
       <div class="input-group spinner">
         <input type="number" ng-model="numberOfGuests" ng-change="setNumberOfGuest(numberOfGuests)" class="form-control" value="0" min="0" max="15" id="numberOfGuests">
-        <div class="input-group-btn-vertical">
-          <button class="btn btn-default" type="button" id="addNumberOfGuestsBtn" ng-click="setNumberOfGuest(numberOfGuests+1)">
-            <i class="fa fa-caret-up"></i>
-          </button>
-          <button class="btn btn-default" type="button" id="subNumberOfGuestsBtn" ng-click="setNumberOfGuest(numberOfGuests-1)">
-            <i class="fa fa-caret-down"></i>
-          </button>
-        </div>
       </div>
     </div>
     <div class="col-md-5"></div>
@@ -82,5 +74,6 @@
   <div class="row" style="text-align: center">
     <a class="btn btn-primary" id="confirmDinnerBtn" ng-click="go('/confirm')">Confirm Dinner</a>
   </div>
+  <div class="row"><p><br></p></div>
 
 </div>

@@ -3,15 +3,54 @@
 // dependency on any service you need. Angular will insure that the
 // service is created first time it is needed and then just reuse it
 // the next time.
-dinnerPlannerApp.factory('Dinner',function ($resource) {
+dinnerPlannerApp.factory('Dinner', function ($resource, $cookieStore, $q) {
   
   var apiKey = "Qu9grxVNWpmshA4Kl9pTwyiJxVGUp1lKzrZjsnghQMkFkfA4LB";
   var dishesTypes = ["main course", "side dish", "dessert", "appetizer", "salad", "bread", "breakfast", "soup", "beverage", "sauce", "drink"];
-  
-  this.numOfGuests = 0;
-  this.selectedMenu = [];
+
+  this.DishSearch = $resource('https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/search',{},{
+    get: {
+      headers: {
+        'X-Mashape-Key': apiKey
+      }
+    }
+  });
+
+  this.Dish = $resource('https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/:id/information',{},{
+    get: {
+      headers: {
+        'X-Mashape-Key': apiKey
+      }
+    }
+  });
 
   var self = this;
+
+  //Get selectedMenu from cookie
+  this.getSelectedMenuFromCookie = function(cookieValue) {
+    for (var i = 0; i < cookieValue[i].length; i++) {
+      	results.push(self.Dish.get({id:cookieValue[i]},function(data){
+        	self.addDishToMenu(data);
+      }, function(){
+        alert("Data retrival was faulty");
+      	}
+      ))
+  	}
+  }
+
+  //Load from cookie if there is one or initialized to 0 the number of guest
+  if ($cookieStore.get('numOfGuests') != undefined) {
+    this.numOfGuests = parseFloat($cookieStore.get('numOfGuests'))
+  } else {
+    this.numOfGuests = 0;
+  }
+
+  // Load from cookir if there is one or initialized to empty list the selected menu
+  if ($cookieStore.get('selectedMenu') != undefined) {
+    this.getSelectedMenuFromCookie($cookieStore.get('selectedMenu'));
+  } else {
+    this.selectedMenu = [];
+  }
 
   this.getAllDishesType = function () {
     return dishesTypes;
@@ -30,6 +69,7 @@ dinnerPlannerApp.factory('Dinner',function ($resource) {
 
   this.setNumberOfGuests = function(num) {
     this.numOfGuests = num;
+    $cookieStore.put('numOfGuests', num); // update cookie
   }
 
   // should return 
@@ -67,15 +107,22 @@ dinnerPlannerApp.factory('Dinner',function ($resource) {
     var price = 0;
     var ingredients = this.getAllIngredients();
     for (var i = 0; i < ingredients.length; i++) {
-      price = (ingredients[i].amount * this.getNumberOfGuests()) + price;
+      price = (ingredients[i].amount * this.numOfGuests) + price;
     }
     return price;
   }
 
   this.addDishToMenu = function(dish) {
     if (this.selectedMenu.indexOf(dish)< 0) {
-      this.selectedMenu.push(dish);  
-    }
+      this.selectedMenu.push(dish);
+      // Update the selectedMenu cookie with the new menu to which we added one dish id 
+      var cookie = $cookieStore.get('selectedMenu');
+      if (cookie != undefined) {
+        $cookieStore.put('selectedMenu', cookie.push(dish.id));
+      } else {
+        $cookieStore.put('selectedMenu', [dish.id]);
+      }
+    }        
   }
 
   this.removeDishFromMenuId = function(id) {
@@ -87,30 +134,11 @@ dinnerPlannerApp.factory('Dinner',function ($resource) {
     }
     if(removeIndex > -1) {
       this.selectedMenu.splice(removeIndex, 1);
+      // Update the selectedMenu cookie with the new menu from which we removed one dish id
+      $cookieStore.put('selectedMenu', $cookieStore.get('selectedMenu').splice(removeIndex, 1));
     }
   }
-
-  this.DishSearch = $resource('https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/search',{},{
-    get: {
-      headers: {
-        'X-Mashape-Key': apiKey
-      }
-    }
-  });
-
-  this.Dish = $resource('https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/:id/information',{},{
-    get: {
-      headers: {
-        'X-Mashape-Key': apiKey
-      }
-    }
-  });
-
-
-  // Angular service needs to return an object that has all the
-  // methods created in it. You can consider that this is instead
-  // of calling var model = new DinnerModel() we did in the previous labs
-  // This is because Angular takes care of creating it when needed.
+  
   return this;
 
 });
