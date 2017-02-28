@@ -3,7 +3,7 @@
 // dependency on any service you need. Angular will insure that the
 // service is created first time it is needed and then just reuse it
 // the next time.
-dinnerPlannerApp.factory('Dinner', function ($resource, $cookieStore, $q) {
+dinnerPlannerApp.factory('Dinner', function ($resource, $cookieStore) {
   
   var apiKey = "Qu9grxVNWpmshA4Kl9pTwyiJxVGUp1lKzrZjsnghQMkFkfA4LB";
   var dishesTypes = ["main course", "side dish", "dessert", "appetizer", "salad", "bread", "breakfast", "soup", "beverage", "sauce", "drink"];
@@ -53,6 +53,18 @@ dinnerPlannerApp.factory('Dinner', function ($resource, $cookieStore, $q) {
     this.selectedMenu = [];
   }
 
+  this.getMenuIds = function() {
+  	var ids = []
+  	for (var i = 0; i < this.selectedMenu.length; i++) {
+  		ids.push(this.selectedMenu[i].id);
+  	}
+  	return ids;
+  }
+
+  this.updateCookies = function() {
+  	$cookieStore.put('numOfGuests', this.numOfGuests);
+  	$cookieStore.put('selectedMenu', this.getMenuIds());
+  }
   this.getAllDishesType = function () {
     return dishesTypes;
   }
@@ -70,7 +82,7 @@ dinnerPlannerApp.factory('Dinner', function ($resource, $cookieStore, $q) {
 
   this.setNumberOfGuests = function(num) {
     this.numOfGuests = num;
-    $cookieStore.put('numOfGuests', num); // update cookie
+    this.updateCookies();
   }
 
   // should return 
@@ -118,17 +130,12 @@ dinnerPlannerApp.factory('Dinner', function ($resource, $cookieStore, $q) {
     for(var i=0; i<this.selectedMenu.length; i++) {
 	if(this.selectedMenu[i].id == dish.id) {
 	    isThere = true;	
-	}
+	  }
     }
     if (!isThere) {
       this.selectedMenu.push(dish);
+      this.updateCookies();
       // Update the selectedMenu cookie with the new menu to which we added one dish id 
-      var cookie = $cookieStore.get('selectedMenu');
-      if (cookie != undefined) {
-        $cookieStore.put('selectedMenu', cookie.push(dish.id));
-      } else {
-        $cookieStore.put('selectedMenu', [dish.id]);
-      }
     }        
   }
 
@@ -142,7 +149,7 @@ dinnerPlannerApp.factory('Dinner', function ($resource, $cookieStore, $q) {
     if(removeIndex > -1) {
       this.selectedMenu.splice(removeIndex, 1);
       // Update the selectedMenu cookie with the new menu from which we removed one dish id
-      $cookieStore.put('selectedMenu', $cookieStore.get('selectedMenu').splice(removeIndex, 1));
+      this.updateCookies();
     }
   }
   

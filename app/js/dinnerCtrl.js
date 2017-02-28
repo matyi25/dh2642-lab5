@@ -21,7 +21,7 @@ dinnerPlannerApp.controller('DinnerCtrl', function ($scope, $location, Dinner) {
   	$scope.getDishPrice = function(dish) {
   		var price = 0;
   		for (var i = 0; i < dish.extendedIngredients.length; i++) {
-      		price = (dish.extendedIngredients[i].amount * $scope.numberOfGuests) + price;
+      		price = (dish.extendedIngredients[i].amount * $scope.getNumberOfGuests()) + price;
     	}
     	return price;
   	}
