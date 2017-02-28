@@ -28,8 +28,8 @@
     </div>
   </div>
 
-  <div id ="selectedDishesList" ng-controller="DishCtrl">
-  	<div class="row" id="pendingRow" style="background-color:#f5f5ef" ng-repeat="dish in fullMenu">
+  <div id ="selectedDishesList">
+  	<div class="row" id="pendingRow" style="background-color:#f5f5ef" ng-repeat="dish in getFullMenu()">
       <div class="col-md-6">
         <a ng-click="removeDish(dish.id)"><h4>{{dish.title}}</h4></a>
       </div>
@@ -41,7 +41,7 @@
       </div>
     </div>
 
-      <div class="row" id="pendingRow" style="background-color:#f5f5ef">
+      <div class="row" id="pendingRow" style="background-color:#f5f5ef" ng-controller="DishCtrl">
       <div class="col-md-6">
         <h4 id="pendingName">{{getPendingName()}}</h4>
       </div>

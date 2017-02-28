@@ -29,12 +29,12 @@ dinnerPlannerApp.factory('Dinner', function ($resource, $cookieStore, $q) {
   //Get selectedMenu from cookie
   this.getSelectedMenuFromCookie = function(cookieValue) {
     for (var i = 0; i < cookieValue[i].length; i++) {
-      	results.push(self.Dish.get({id:cookieValue[i]},function(data){
+      	self.Dish.get({id:cookieValue[i]},function(data){
         	self.addDishToMenu(data);
       }, function(){
         alert("Data retrival was faulty");
       	}
-      ))
+      )
   	}
   }
 
@@ -48,6 +48,7 @@ dinnerPlannerApp.factory('Dinner', function ($resource, $cookieStore, $q) {
   // Load from cookir if there is one or initialized to empty list the selected menu
   if ($cookieStore.get('selectedMenu') != undefined) {
     this.getSelectedMenuFromCookie($cookieStore.get('selectedMenu'));
+    this.selectedMenu = [];
   } else {
     this.selectedMenu = [];
   }
@@ -113,7 +114,13 @@ dinnerPlannerApp.factory('Dinner', function ($resource, $cookieStore, $q) {
   }
 
   this.addDishToMenu = function(dish) {
-    if (this.selectedMenu.indexOf(dish)< 0) {
+    var isThere = false;
+    for(var i=0; i<this.selectedMenu.length; i++) {
+	if(this.selectedMenu[i].id == dish.id) {
+	    isThere = true;	
+	}
+    }
+    if (!isThere) {
       this.selectedMenu.push(dish);
       // Update the selectedMenu cookie with the new menu to which we added one dish id 
       var cookie = $cookieStore.get('selectedMenu');
