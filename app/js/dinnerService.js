@@ -28,7 +28,7 @@ dinnerPlannerApp.factory('Dinner', function ($resource, $cookieStore, $q) {
 
   //Get selectedMenu from cookie
   this.getSelectedMenuFromCookie = function(cookieValue) {
-    for (var i = 0; i < cookieValue[i].length; i++) {
+    for (var i = 0; i < cookieValue.length; i++) {
       	self.Dish.get({id:cookieValue[i]},function(data){
         	self.addDishToMenu(data);
       }, function(){
