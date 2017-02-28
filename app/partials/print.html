@@ -1,6 +1,9 @@
 <div id="printRecipeView">
+<div class="row"><div class="col-md-12"><p><br></p></div></div>
+
 	<div class="section" id="selectDishSection">
       	<div class="container-fluid" id="printRecipeViewHeader">
+
         	<div class="row">
           		<div class="col-md-6">
             		<div class="col-md-5">
@@ -14,22 +17,31 @@
             		</div>
           		</div>
           		<div class="col-md-6" style="text-align: right">
-            		<a class="btn btn-primary" id="backButton" ng-click=go('/confirm')>Go back and edit</a>
+                <div class="col-md-12"> 
+                  <br>
+            		  <a class="btn btn-primary" id="backButton" ng-click=go('/confirm')>Go back and edit</a>
+                </div>
           		</div>
         	</div>
       	</div>
     </div>
 
     <div class="section">
-      <div class="container" id="printRecipeViewDishes">
+    <div class="row"><p><br></p></div>
+      <div class="container" id="printRecipeViewDishes" style="background-color: #ffffff;opacity: 0.8">
+        <div class="row"><div class="col-md-12"><p><br></p></div></div>
         <div class="row" ng-repeat="dish in fullMenu">
-            <div class="col-md-6">
-              	<div class="col-md-6">
-                	<img ng-src="{{dish.image}}" class="img-responsive">
+            <div class="col-md-4">
+            <div class="row">
+              	<div class="col-md-12">
+                
+                	<img ng-src="{{dish.image}}" class="img-responsive" style="width:100%;height: 200px">
+                  </div>
               	</div>
-              	<div class="col-md-6">
-                	<div class="row">
-                  		<h3>{{dish.title}}</h3>
+                <div class="row">
+              	<div class="col-md-12">
+                	
+                  		<h3><b>{{dish.title}}</b></h3>
                 	</div>
                 	<p></p>
               	</div>

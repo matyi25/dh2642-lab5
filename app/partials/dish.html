@@ -3,27 +3,34 @@
 
 <div id="dishDetailsView" ng-class="{'loading': loadState}">
 	<div class="section">
-		<div class="container">
+		<div class="container" id="dishOverview">
 			<div class="row">
-			    <div class="col-md-6">
-			        <div class="row" id="dishOverview">
-			        	<div class="col-md-12" style="text-align: left">
-			        		<h1>{{dish.title}}</h1>
+				
+			    <div class="col-md-9">
+			    	<div class="row">
+			    		<div class="col-md-12"><h1>{{dish.title}}</h1></div>
+		    		</div>
+			        <div class="row">
+			        <div class="col-md-1"><p><br></p></div>	
+			        	<div class="col-md-3" style="text-align: left">
+			        	<div class="row">
 							<img src="{{dish.image}}" class="img-responsive">
 							<p></p>
 						</div>
-			        </div>
+			        
 			    	<div>
                 		<p></p>
                 	</div>
 			    	<div class="row">
-			        	<div class="col-md-6">
+			        	<div class="col-md-3">
                     		<a class="btn btn-primary" id="backButton" ng-click="go('/search')">Back to select dish</a>
                   		</div>
 			    	</div>
-			    </div>
+			    	</div>
 
-				<div class="col-md-6"  style="background-color: #ffe680">
+			    <div class="col-md-1"><p><br></p></div>
+
+				<div class="col-md-7"  style="background-color: #ffe680">
 			        <div class="row" id="dishIngredients">
 			        	<div class="col-md-12" style="text-align: left">
 							<h3>Ingredients for {{getNumberOfGuests()}} people</h3>
@@ -33,18 +40,23 @@
 						 		<div class="col-md-1" style="text-align: right">SEK</div>
 						 		<div class="col-md-2" style="text-align: center">{{ingredient.amount * getNumberOfGuests()}}</div>
 						 	</div>
+						 	<br>
 						</div>
-			        	<div><p><br></p></div>
+			        	
 			        	<div class="row">
 			              	<div class="col-md-4">
+			              	<div class="col-md-12">
 			              		<a class="btn btn-primary" id="confirmButton" ng-click="addDish(); go('/search')">Confirm dish</a>
+			              		</div>
 			              	</div>
-			              	<div class="col-md-2" style="text-align:right">
-			              		<b>SEK {{getPendingCost()}}</b>
+			              	<div class="col-md-6" style="text-align:right"><b>SEK</b></div>
+			              	<div class="col-md-1" style="text-align:right">
+			              		<b>{{getPendingCost()}}</b>
 			              	</div>
 			        	</div>
 			        	<div><p></p></div>
 			    	</div>
+				</div>
 				</div>
 			</div>
 		</div>
@@ -53,10 +65,14 @@
 	<div class="section">
 		<div class="container">
 			<div class="row" id="dishPreparation">
-				<div class="col-md-12" style="text-align: left; background-color: #ffe680">
+				<div class="col-md-12" style="text-align: left; background-color: #ffffff;opacity:0.8">
 					<h1>Preparation</h1>
 					<p>{{dish.instructions}}</p>
+					<br>
 				</div>
+			</div>
+			<div class="row">
+				<p><br></p>
 			</div>
 		</div>
 	</div>

@@ -31,11 +31,12 @@ dinnerPlannerApp.controller('DinnerCtrl', function ($scope, $location, Dinner) {
   	}
 
   	$scope.getFullMenu = function () {
-  		Dinner.getFullMenu();
+  		return Dinner.getFullMenu();
   	}
 
   	$scope.getFullMenuPrice = function() {
-  		Dinner.getTotalMenuPrice();
+  		return Dinner.getTotalMenuPrice();
+
   	}
 
 

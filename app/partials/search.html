@@ -1,57 +1,63 @@
-	<!-- We include the sidebar as it is shared across two screens. -->
-	<ng-include src="'partials/dinner-sidebar.html'" ng-controller="DinnerCtrl"></ng-include>
+		<!-- We include the sidebar as it is shared across two screens. -->
+		<ng-include src="'partials/dinner-sidebar.html'" ng-controller="DinnerCtrl"></ng-include>
 
-	<!-- FilteredDishesView -->
-	<div class="col-md-9" id="selectDishColumn" ng-class="{'loading': loadState}">
-		<div id="filteredDishesView">
-	    	<div class="section" id="selectDishSection">
-	  			<div class="container">
-	    			<div class="row">
-	      				<div class="col-md-12">
-	        				<h1>Select dish</h1>
-	      				</div>
-	    			</div>
+		<!-- FilteredDishesView -->
+		<div class="col-md-9" id="selectDishColumn" ng-class="{'loading': loadState}">
+			<!-- <div id="filteredDishesView"> -->
+		    	<div class="section" id="selectDishSection">
+		  			<div class="container">
+		    			<div class="row">
+		      				<div class="col-md-12">
+		        				<h1>Select dish</h1>
+		      				</div>
+		    			</div>
 
-	    			<div class="col-md-3">
-			            <form>
-			              <div class="form-group">
-			                <select ng-model="type" class="form-control" id="dishType" placeholder="Enter key words">
-			                	<option ng-repeat="dishType in dishesTypes">{{dishType}}</option>
-			                </select>
-			              </div>
-			            </form> 
-			          </div>
+		    			<div class="row" id="inputDish">
+		    				<div class="col-md-1" align="center">
+			    				<p>Dish type: </p>
+			    			</div>
 
-				        <div class="row" id="inputDish">
-				          <div class="col-md-3">
-				              <div class="form-group">
-				                <div class="input-group">
-				                  <input ng-model="query" id="dishName" type="text" class="form-control" placeholder="Enter key words">
-				                  <span class="input-group-btn">
-				                    <a class="btn btn-success" id="searchBtn" type="submit" ng-click="search(query, type)">Search</a>
-				                  </span>
-				                </div>
-				              </div>
-				          </div>
+			    			<div class="col-md-3">
+					        	<form>
+					            	<div class="form-group">
+					              		<select ng-model="type" class="form-control" id="dishType" placeholder="Enter dish type">
+					                		<option ng-repeat="dishType in dishesTypes">{{dishType}}</option>
+					              		</select>
+					            	</div>
+					          	</form> 
+					        </div>
+						        
+						    <div class="col-md-3">
+						    	<div class="form-group">
+						            <div class="input-group">
+						                <input ng-model="query" id="dishName" type="text" class="form-control" placeholder="Enter dish name">
+					                  	<span class="input-group-btn">
+					                    	<a class="btn btn-success" id="searchBtn" type="submit" ng-click="search(query, type)">Search</a>
+					                    </span>
+					                </div>
+					            </div>
+					        </div>
+				        </div>
+			      	</div>
+		    	</div>
 
-			          
-			        </div>
-		      	</div>
-	    	</div>
-
-		    <div class="section">
-		      	<div class="container" id="filteredDishes">
-		      		<div class="row"></div>
-		      		<div ng-repeat="dish in dishes">
-		      			<div class="row" ng-if="($index%5 == 0) || ($index ==0)"></div>
-	  					<div class="col-md-2">
-	  						<img ng-src="https://spoonacular.com/recipeImages/{{dish.image}}" ng-click="go('/dish/'+dish.id)" class="img-responsive"/>
-	  						<p id="dishNameRow" style="text-align: center"><b>{{dish.title}}</b></p>
-	  					</div>
-	  				</div>
-		      	</div>
+			    <div class="section">
+			      	<div class="container" id="filteredDishes">
+			      		<div class="row"><p><br></p></div>
+			      		<div class="row">
+			      		<div class="col-md-9">
+			      		<div class="col-md-3" ng-repeat="dish in dishes" style="height: 300px;width: 250px">
+			      			<div class="row" ng-if="($index%5 == 0) || ($index ==0)"></div>
+		  					<div class="col-md-12">
+		  						<img ng-src="https://spoonacular.com/recipeImages/{{dish.image}}" ng-click="go('/dish/'+dish.id)" class="img-responsive"/ style="height: 150px;width: 100%">
+		  						<p id="dishNameRow" style="text-align: center"><b>{{dish.title}}</b></p>
+		  					</div>
+		  				</div>
+		  				</div>
+		  				</div>
+			      	</div>
+			    </div>
+			<!--</div>-->
+			<div id="waitDialog" class="modal">
 		    </div>
 		</div>
-		<div id="waitDialog" class="modal">
-	    </div>
-	</div>
